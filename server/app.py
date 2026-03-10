@@ -1,7 +1,4 @@
 import os
-import eventlet
-eventlet.monkey_patch()
-
 from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
@@ -17,7 +14,7 @@ app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET', 'medibook_secret_123')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
 
 jwt = JWTManager(app)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')
 
 # Register routes
 from routes.auth import auth_bp
