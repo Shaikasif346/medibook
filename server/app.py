@@ -4,7 +4,6 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_socketio import SocketIO
 from dotenv import load_dotenv
-from db import get_db
 
 load_dotenv()
 
@@ -14,9 +13,8 @@ app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET', 'medibook_secret_123')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
 
 jwt = JWTManager(app)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
 
-# Register routes
 from routes.auth import auth_bp
 from routes.doctors import doctors_bp
 from routes.appointments import appointments_bp
